@@ -1,17 +1,21 @@
 % drawFourBar(l12, l23, l34, l14, l35, plotTitle)
 %
-%   Takes input of four-bar linkage link lengths, and plot title, then
-%   draws linkage's ranges of motion. Can receive dimensions of arbitrary
-%   number of sets of dimensions, but all vectors must have length 1 or n,
-%   with n being length of longest vector provided.
+%   Takes input of four-bar linkage link lengths and plot title, then draws
+%   linkage's ranges of motion. Can receive dimensions of arbitrary number
+%   of sets of dimensions, but all vectors must have length 1 or n, with
+%   'n' being length of longest vector provided.
 %
 %   'l12' is crank, 'l23' is coupler, 'l34' is output, 'l14' is ground, and
-%   'l35' is extension to coupler.
+%   'l35' is extension to coupler, as shown here:
+%
+%       2---3--5
+%      /   /
+%   ==1===4==
 %
 %   'l35' and 'plotTitle' are optional.
 %
 %   Written by Travis Llado (travis@travisllado.com). He is aware that it
-%   has bugs related to inversions. Last edited 2018-03-14.
+%   has bugs related to inversions. Last edited 2018-03-18.
 
 function drawFourBar(l12, l23, l34, l14, l35, plotTitle)
     % Check which argument were received
@@ -42,7 +46,7 @@ function drawFourBar(l12, l23, l34, l14, l35, plotTitle)
 
     % Specify range to rotate input/th2
     res = 0.01; % rad
-    th2 = 0:res:2*pi;
+    th2 = 0:res:2*pi;   % full circle
     rr = length(th2);
 
     % Initialize intermediate variables
@@ -79,7 +83,7 @@ function drawFourBar(l12, l23, l34, l14, l35, plotTitle)
     hold on
     nn = 30;    % random number so our mechanism is at an odd angle, not flat
     
-    for ii = 1:ll   % Draw ground link
+    for ii = 1:ll   % Draw ground links first so they're background
         plot([x(1,nn,ii)-x(4,nn,ii)*0.2 x(4,nn,ii)*1.2], [y(1,nn,ii) y(4, ...
             nn, ii)], 'color', [.6 .25 .25], 'LineWidth', 5);
     end
@@ -98,7 +102,7 @@ function drawFourBar(l12, l23, l34, l14, l35, plotTitle)
             plot(x(5,nn,ii), y(5,nn,ii), 'bo', 'LineWidth', 5);
         end
         
-        % Plot range curves
+        % Draw range curves
         plot(x(2,:,ii)', y(2,:,ii)', 'r',  'LineWidth', 2);
         plot(x(3,:,ii)', y(3,:,ii)', 'g',  'LineWidth', 2);
         if exist('l35', 'var')
@@ -113,3 +117,5 @@ function drawFourBar(l12, l23, l34, l14, l35, plotTitle)
     end
     hold off
 end
+
+% End of file
